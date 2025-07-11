@@ -2,12 +2,6 @@ package main
 
 import "fmt"
 
-var keywords = map[string][]string{
-	"keywords": {
-		"package", "import", "func",
-	},
-}
-
 func main() {
 	code := `
 	package main
@@ -18,34 +12,18 @@ func main() {
 		fmt.Println("It prints multiple lines of text.")
 		fmt.Println("Goodbye!")
 	}`
-	lines := [][]string{}
+	tokenses, err := Parse(code)
 
-	word := ""
-	line := []string{}
-	for _, char := range code {
-		if space := IsSpace(char); space != Nil {
-			switch space {
-			case NewLine:
-				if word == "" {
-					continue
-				}
-				line = append(line, word)
-				lines = append(lines, line)
-				line = []string{}
-				word = ""
-			case Space:
-				line = append(line, word)
-				word = ""
-			case Tab:
-				continue
-			}
-		} else {
-			word += string(char)
-		}
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		return
 	}
 
-	for _, line := range lines {
-		fmt.Println(line)
+	for _, tokens := range tokenses {
+		for _, token := range tokens {
+			fmt.Println(token)
+		}
+		fmt.Println("--------------")
 	}
 
 }
