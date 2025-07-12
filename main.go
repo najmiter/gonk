@@ -7,10 +7,7 @@ func main() {
 	package main
 	import "fmt"
 	func main() {
-		fmt.Println("Hello, World!")
-		fmt.Println("This is a Go program.")
-		fmt.Println("It prints multiple lines of text.")
-		fmt.Println("Goodbye!")
+		var number := 123
 	}`
 	tokenses, err := Parse(code)
 

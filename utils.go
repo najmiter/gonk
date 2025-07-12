@@ -2,22 +2,29 @@ package main
 
 import (
 	"errors"
+	"strconv"
 )
 
-func Parse(code string) ([][]Token, error) {
+func Parse(code string) (tokenses [][]Token, _ error) {
 	if code == "" {
 		return nil, errors.New("Code is empty")
 	}
 
 	word := ""
 	tokens := []Token{}
-	tokenses := [][]Token{}
 
 	for _, char := range code {
 		if space := IsSpace(char); space != Nil {
-			kind := kinds[word]
-			if kind == "" {
+			// get the kind
+			kind, ok := kinds[word]
+			if !ok {
 				kind = KindPlain
+			}
+
+			// check for numeric values
+			_, isNum := strconv.Atoi(word)
+			if isNum == nil {
+				kind = KindNumber
 			}
 			token := Token{name: word, kind: kind}
 			switch space {
