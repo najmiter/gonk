@@ -7,7 +7,7 @@ import (
 
 func Parse(code string) (tokenses [][]Token, _ error) {
 	if code == "" {
-		return nil, errors.New("Code is empty")
+		return nil, errors.New("Code is empty!")
 	}
 
 	word := ""
